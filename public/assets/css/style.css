@@ -1,0 +1,7 @@
+/* imgswipper Réduire la taille des images*/
+.img-sizer{
+    height:550px;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+}
+

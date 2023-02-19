@@ -1,0 +1,78 @@
+<header>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light px-lg-3 py-lg-2 shadow-sm sticky-top">
+		<div class="container-fluid">
+			<a class="navbar-brand me-5 fw-bold fs-3 title-font" href="{{path('app_home')}}">ShOp</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active me-3" aria-current="page" href="{{path('app_home')}}">ACCUEIL</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link me-3" href="#">SERVICES</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link me-3" href="#">NOS PRODUITS</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link me-3" href="#">A PROPOS</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link me-3" href="#">CONTACT</a>
+					</li>
+				</ul>
+				{% if app.user %}
+					<div class="d-flex">
+						<ul class='navbar-nav'>
+							<li class="nav-item">
+								<a class="me-3 btn btn-sm  btn-outline-success" href="{{path('app_account')}}">
+									<i class="bi bi-person mx-1"></i>Mon Compte</a>
+							</li>
+							<li class="nav-item">
+								<a class="btn btn-sm  btn-outline-danger" href="{{path('app_logout')}}">
+									<i class="bi bi-box-arrow-in-right mx-1"></i>Logout</a>
+							</li>
+						</ul>
+					</div>
+				{% else %}
+
+					<div class="d-flex">
+						<ul class='navbar-nav'>
+							<li class="nav-item">
+								<a class="me-3 btn btn-sm  btn-outline-primary" href="{{path('app_login')}}">
+									<i class="bi bi-person mx-1"></i>S'identifier</a>
+							</li>
+							<li class="nav-item">
+								<a class="btn btn-sm  btn-outline-secondary" href="{{path('app_register')}}">
+									<i class="bi bi-box-arrow-in-right mx-1"></i>S'inscrire</a>
+							</li>
+						</ul>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</nav>
+
+	<!-- Début carousel avec swiper JS -->
+
+	<div class="container-fluid mt-2 ">
+		<div class="swiper swiper-block" style="height: 550px;">
+			<div class="swiper-wrapper">
+
+				<div class="swiper-slide">
+					<img src="assets/images/carousel/1.jpg" class="img-fluid w-100 d-block img-sizer"/>
+				</div>
+				<div class="swiper-slide">
+					<img src="assets/images/carousel/2.jpg" class="img-fluid w-100 d-block img-sizer"/>
+				</div>
+
+				<div class="swiper-slide">
+					<img src="assets/images/carousel/3.jpg" class="img-fluid w-100 d-block img-sizer"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fin carousel avec swiper JS -->
+</header>
