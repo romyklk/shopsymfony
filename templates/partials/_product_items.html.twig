@@ -1,0 +1,9 @@
+            <div class="col-md-3">
+                <div class="similar-product text-center shadow my-2">
+                <a href="{{path('app_product_detail',{'slug':product.slug})}}" class="text-decoration-none text-dark">
+                    <img class="w-100" src="/assets/uploads/products/{{product.image}}" alt="{{product.name}}" style="height:20rem;aspect-ratio:3/2;object-fit:contains;">
+                    <p class="title">{{product.name}}</p>
+                    <p class="fw-bold">{{product.price/100}} €</p>
+                </a>
+                </div>
+            </div>

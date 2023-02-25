@@ -1,14 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil |{{parent()}}{% endblock %}
+{% block title %}Accueil |{{parent()}}
+{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Accueil</h1>
-               
-            </div>
-        </div>
-    </div>
+{% include "partials/_slider.html.twig" %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center mt-5 mb-5">Nos produits</h1>
+			</div>
+			{# Afficher les produits par critère#}
+		</div>
+		<div class="row">
+			<div class="col-md-6 m-auto">
+				<ul class="nav nav-tabs border-0">
+					<li class="nav-item">
+						<a class="nav-link text-dark fw-bold shadow" href="#seller">Best Seller</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark fw-bold shadow" href="#sale">Promo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark fw-bold shadow" href="#featured">Featured</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark fw-bold shadow" href="#new">New</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-dark fw-bold shadow" href="#special">Special</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<section>
+			<div class="row">
+				<div id="seller" class='d-flex justify-content-around'>
+					{% for product in productsBestSeller %}
+						{% include "partials/product.html.twig" %}
+					{% endfor %}
+				</div>
+
+				<div id="sale" class='d-flex justify-content-around'>
+					{% for product in productsOnSale %}
+						{% include "partials/product.html.twig" %}
+					{% endfor %}
+				</div>
+
+				<div id="featured" class='d-flex justify-content-around'>
+					{% for product in productsFeatured %}
+						{% include "partials/product.html.twig" %}
+					{% endfor %}
+				</div>
+
+				<div id="new" class='d-flex justify-content-around'>
+					{% for product in productsNewArrival %}
+						{% include "partials/product.html.twig" %}
+					{% endfor %}
+				</div>
+
+				<div id="special" class='d-flex justify-content-around'>
+					{% for product in productsIsSpecialOffer %}
+						{% include "partials/product.html.twig" %}
+					{% endfor %}
+				</div>
+
+			</div>
+		</section>
+
+	</div>
 {% endblock %}

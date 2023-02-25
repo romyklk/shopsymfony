@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails produit -
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-11 m-auto">
+				<h2 class='text-center'>Détails
+					{{product.name}}</h2>
+				<div class="card mb-3 mt-3">
+					<div class="row g-0">
+						<div class="col-md-4">
+							<img src="/assets/uploads/products/{{product.image}}" class="img-fluid rounded-start" alt="{{product.name}}">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">{{product.name}}</h5>
+                                <small class="text-muted">
+                                    {% for category in product.category %}
+                                    <span class="badge rounded-pill bg-dark"> {{category.name}}</span>
+                                       
+                                    {% endfor %}
+                                </small>
+                                <p><small class="text-muted">Tags : {{product.tags}}</small></p>
+								<p class="card-text">
+									<i class="bi bi-star text-warning" style="font-size:15px;"></i>
+									{{product.reviewsProducts|length}}
+								</p>
+								<p class="card-text">{{product.description|raw}}</p>
+								<div class="my-2">
+									<p class="mb-1">
+										<del>{{product.price/100}}
+											€</del>
+										<span class="text-danger">
+											<span class="badge bg-danger">-10%</span>
+										</span>
+									</p>
+									<p class="text-bold h5 mb-1">{{product.price/100*0.9}}
+										€</p>
+								</div>
+
+								<div class="d-flex flex-row gap-3">
+									<button class="btn btn-outline-success">Acheter</button>
+									<button class="btn btn-dark">Ajouter au panier</button>
+									<div class="quantity">
+										<input type="number" class="form-control" id="quantity" value="1" min="0" max="5"  name="quantity">
+									</div>
+								</div>
+								<p class="card-text">
+									<small class="text-muted">Last updated 3 mins ago</small>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+                <div class="container similar-products my-4">
+        <hr>
+        <p class="display-5">MyShOp vous suggère</p>
+
+        <div class="row">
+        {# Afficher les produits de la même catégorie#}
+        {% for category in product.category %} {# on boucle sur les catégories du produit #}
+                {% for product in category.products %} {# on boucle sur les produits de la catégorie #}
+                    {% include "partials/_product_items.html.twig" %}
+                {% endfor %}
+        {% endfor %}
+
+        </div>
+    </div>
+		</div>
+	</div>
+
+{% endblock %}
