@@ -9,6 +9,7 @@ class CartServices
 {
     private $session;
     private $productRepository;
+    private $tva = 0.2;
 
     public function __construct(SessionInterface $session, ProductRepository $productRepository)
     {
@@ -41,7 +42,6 @@ class CartServices
 
 
     // Cette méthode permet de supprimer un produit du panier. Elle prend en paramètre l'id du produit
-
     public function deleteFromCart($id)
     {
         // On récupère le panier en session
@@ -90,6 +90,9 @@ class CartServices
     {
         // On met à jour le panier en session
         $this->session->set('cart', $cart);
+
+        // On met à jour le panier en session avec tous les produits. Cela permet de récupérer les produits en session dans le controller dans cartData
+        $this->session->set('cartData', $this->getFullCart());
     }
 
 
@@ -110,6 +113,11 @@ class CartServices
         // On initialise un tableau qui contiendra tous les produits du panier
         $fullCart = [];
 
+        // On initialise une variable qui contiendra la quantité totale des produits du panier
+        $quantity_cart = 0;
+
+        $subtotal = 0;
+
         foreach ($cart as $id => $quantity) {
 
             // On récupère le produit correspondant à l'id
@@ -118,15 +126,29 @@ class CartServices
             // Si le produit existe, on l'ajoute au tableau $fullCart
             if ($product) {
                 // On ajoute le produit au tableau $fullCart
-                $fullCart[] = [
+                $fullCart['products'][] = [
                     'product' => $product,
                     'quantity' => $quantity
                 ];
+                // On incrémente la quantité totale des produits du panier
+                $quantity_cart += $quantity;
+
+                // On incrémente le sous-total
+                $subtotal += ($product->getPrice() / 100) * $quantity;
+
             } else {
                 $this->deleteAllToCart($id); // On supprime le produit du panier
             }
         }
 
-        return $fullCart; // On retourne le tableau contenant tous les produits du panier
+        // On ajoute la quantité totale des produits du panier et le sous-total au tableau $fullCart
+        $fullCart['data'] = [
+            'quantity_cart' => $quantity_cart,
+            'subtotal' => $subtotal,
+            'taxes' => round($subtotal * $this->tva, 2),
+        ];
+
+        // On retourne le tableau contenant tous les produits du panier et les données du panier
+        return $fullCart; 
     }
 }

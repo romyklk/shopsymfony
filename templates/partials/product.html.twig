@@ -12,10 +12,10 @@
         <p class="card-text"><i class="bi bi-star text-warning" style="font-size:15px;"></i>{{product.reviewsProducts|length}}</p>
 		<p class="card-text text-center d-flex justify-content-evenly">
 			<span class='fw-bold text-decoration-line-through d-inline'>
-				{{product.price/100}}
+				{{(product.price/100)|round(2, 'floor')}}
 				€</span>
 			<span class='fw-bold text-info d-inline'>
-				{{product.price/100*0.9}}
+				{{(product.price/100*0.9)|round(2, 'floor')}}
 				€</span>
 		</p>
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">

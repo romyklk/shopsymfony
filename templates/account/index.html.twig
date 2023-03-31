@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block body %}
+{% set pageName = "Account" %}
 	<div class="container">
+	{% include "partials/_pagetitle.html.twig" %}
 		<div class="row">
 			<div class="col-md-12 justify-content-center align-items-center text-center">
-				<h1>Account
-				</h1>
+
 				<p>Bienvenue sur votre compte
 					{{app.user.firstname|capitalize}}
 					{{app.user.lastname|upper}}!</p>

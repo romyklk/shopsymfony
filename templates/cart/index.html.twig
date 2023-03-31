@@ -13,10 +13,12 @@
 
 
 {% block body %}
+{% set pageName = "Mon panier" %}
 	<div class="container">
+	{% include "partials/_pagetitle.html.twig" %}
 		<div class="row">
 			<div class="col-md-12">
-				<h1>Mon panier</h1>
+
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -28,11 +30,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% set subTotal = 0 %}
+						
 						{# on initialise la variable qui va stocker le montant total du panier #}
-						{% for element in cart %}
-							{% set subTotal = subTotal + (element.product.price/100 * element.quantity) %}
-							{# on ajoute le prix du produit multiplié par la quantité à la variable subTotal #}
+						{% for element in cart.products %}
 							<tr>
 								<td>
 									<a href="" class='text-decoration-none text-dark'>
@@ -63,7 +63,7 @@
 						{% endfor %}
 
 						{# si le panier est vide on affiche un message #}
-						{% if subTotal == 0 %}
+						{% if cart.data.subtotal == 0 %}
 							<tr>
 								<td colspan="5" class="text-center border-0">Votre panier est vide</td>
 							</tr>
@@ -72,8 +72,7 @@
 						{% else %}
 							<tr>
 								<td colspan="3" class="text-end border-0 fw-bold h6 text-muted">TVA incluse</td>
-								<td class="border-0 fw-bold h6 text-muted">{{subTotal*0.2}}
-									€</td>
+								<td class="border-0 fw-bold h6 text-muted">{{cart.data.taxes}}	€</td>
 							</tr>
 							{#  Livraison #}
 							<tr>
@@ -82,7 +81,7 @@
 							</tr>
 							<tr>
 								<td colspan="3" class="text-end border-0 fw-bold h6">Total TTC</td>
-								<td class="border-0 fw-bold h6">{{subTotal}}
+								<td class="border-0 fw-bold h6">{{cart.data.subtotal}}
 									€</td>
 							</tr>
 
@@ -97,7 +96,7 @@
 			</tbody>
 		</table>
 
-		{% if subTotal != 0 %}
+		{% if cart.data.subtotal != 0 %}
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<a href="{{path('app_cart_empty')}}" class="btn btn-warning">Vider mon panier</a>
 				<a href="" class="btn btn-success">Passer commande</a>

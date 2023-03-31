@@ -3,7 +3,7 @@
                 <a href="{{path('app_product_detail',{'slug':productFeatured.slug})}}" class="text-decoration-none text-dark">
                     <img class="w-100" src="/assets/uploads/products/{{productFeatured.image}}" alt="{{productFeatured.name}}" style="height:20rem;aspect-ratio:3/2;object-fit:contains;">
                     <p class="title">{{productFeatured.name}}</p>
-                    <p class="fw-bold">{{productFeatured.price/100}} €</p>
+                    <p class="fw-bold">{{(productFeatured.price/100)|round(2, 'floor')}} €</p>
                 </a>
                 </div>
             </div>

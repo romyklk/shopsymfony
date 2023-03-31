@@ -24,6 +24,11 @@ class CartController extends AbstractController
         // On récupère le panier en session
         $cart = $this->cartServices->getFullCart();
 
+        // Si le panier est vide, on redirige l'utilisateur vers la page d'accueil
+        if(!isset($cart['products'])){
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
         ]);
@@ -72,7 +77,7 @@ class CartController extends AbstractController
     public function removeFromCart($id): Response
     {
         // On supprime le produit du panier
-        $this->cartServices->deleteFromCart($id);
+        $this->cartServices->deleteAllToCart($id);
 
         // On redirige l'utilisateur vers la page du panier
         return $this->redirectToRoute('app_cart');
