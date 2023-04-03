@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\CGU;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccountController extends AbstractController
+class CGUController extends AbstractController
 {
-    #[Route('/account', name: 'app_account')]
+    #[Route('/conditions-generales', name: 'app_cgu')]
     public function index(): Response
     {
-        return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
+        return $this->render('cgu/index.html.twig', [
+            'controller_name' => 'CGUController',
         ]);
     }
 }

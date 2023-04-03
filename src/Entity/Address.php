@@ -154,4 +154,19 @@ class Address
 
         return $this;
     }
+
+
+    public function __toString(): string
+    {
+        $result = $this->fullName ."[goline]";
+        if($this->getCompany()) {
+            $result .= $this->company ."[goline]";
+        }
+        $result .= $this->address ."[goline]";
+        $result .= $this->complement ."[goline]";
+        $result .= "0" .$this->phone ."[goline]";
+        $result .= $this->codePostal ." ". $this->city ." ". $this->country ."[goline]";
+        return $result;
+        
+    }
 }

@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récapitulatif de la commande -
+	{{parent()}}
+{% endblock %}
+
+{% block scripStripe %}
+	<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<style>
+		.form-check {
+			border: 3px solid #c6e0ff;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			padding: 30px;
+			cursor: pointer;
+			width: 100%;
+			background-color: #f8f9fa;
+		}
+
+		tr,
+		td,
+		th {
+			border: 0;
+		}
+
+		tbody:nth-child(1) td {
+			font-weight: 600;
+			text-align: right;
+		}
+	</style>
+{% endblock %}
+
+
+{% block body %}
+
+	{% set pageName = "Récapitulatif de la commande" %}
+	<div class="container-fluid">
+		{% include "partials/_pagetitle.html.twig" %}
+	</div>
+	<div class="container">
+
+
+		<div class="row py-2">
+
+			<div class="col-md-5 shadow py-2">
+				<div class="form-group">
+					<h5>Veuillez vérifier votre adresse de livraison</h5>
+					<div class="content" id="address">
+						{{address| replace({"[goline]": "<br>"})|raw }}
+						{#Ajouter une nouvelle adresse#}
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<a href="{{path('app_address_edit',{'id':address.id})}}" class="btn btn-warning">Modifier l'adresse</a>
+							<a href="{{path('app_checkout_edit')}}" class="btn btn-info">Changer l'adresse</a>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="form-group">
+					<h5 class="mt-2" id="carrier">Veuillez vérifier le transporteur</h5>
+					<div>
+						{{carrier| replace({"[goline]": "<br>"})|raw}}
+					</div>
+					{#Ajouter un nouveau transporteur#}
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<a href="{{path('app_checkout_edit')}}" class="btn btn-dark">Changer le transporteur</a>
+					</div>
+				</div>
+				{% if informations is not null %}
+					<div class="form-group mt-3" id="informations">
+						<h5 class="mt-2">Veuillez vérifier votre message</h5>
+						<div>
+							{{informations|raw}}
+
+						</div>
+					</div>
+				{% endif %}
+
+			</div>
+
+
+			<div class="col-md-7 bg-light shadow py-2">
+				<table class="table table-striped">
+					<h3 class="text-center">
+						Récapitulatif de la commande
+					</h3>
+					<thead>
+						<tr>
+							<th>Produit</th>
+							<th>Quantité</th>
+							<th>Prix</th>
+							<th>Photo</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for element in cart.products %}
+							<tr>
+								<td>{{element.product.name}}</td>
+								<td>{{element.quantity}}</td>
+								<td>{{element.product.price / 100}}
+									€</td>
+								<td><img src="/assets/uploads/products/{{element.product.image}}" alt="{{element.product.name}}" width="50" height="50"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="well">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>Sous-total:</td>
+								<td>{{(cart.data.subtotal) - (cart.data.taxes)}}
+									€</td>
+							</tr>
+							<tr>
+								<td>Livraison par
+									{{carrier.name}}</td>
+								<td>
+
+									<span id="shipping-cost">{{carrier.price / 100}}
+										€</span>
+
+									<p>
+										<small class="text-muted">{{carrier.description}}</small>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td>Taxe
+									<small>(TVA incluse 20%)</small>:</td>
+								<td>
+									<span id="taxe-cost">{{cart.data.taxes}}
+										€</span>
+								</td>
+							</tr>
+							<tr>
+								<td>Total TTC:</td>
+								<td>
+									<span id="total-cost">{{(cart.data.subtotal) + (carrier.price / 100)}}
+										€</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="d-grid gap-2 col-6 mx-auto py-2">
+					<button type="submit" id="checkout-button" class="btn btn-success">
+						Payer |
+						{{(cart.data.subtotal) + (carrier.price / 100)}}
+						€</button>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascriptsStripe %}
+	<script type="text/javascript">
+		const stripe = Stripe("{{ PUBLISHABLE_KEY }}");
+		const checkoutButton = document.getElementById('checkout-button');
+		checkoutButton.addEventListener('click', () => {
+		fetch("{{ path('app_create_checkout_session',{'reference':reference}) }}", {method: 'POST'}).then(function (response) {
+		return response.json();
+		}).then(function (session) {
+		return stripe.redirectToCheckout({sessionId: session.id});
+		}).then(function (result) {
+
+		if (result.error) {
+		alert(result.error.message);
+		}
+		}).catch(function (error) {
+		console.error('Error:', error);
+		});
+
+		});
+	</script>
+{% endblock %}

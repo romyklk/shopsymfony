@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Cart;
+use App\Entity\Order;
+use App\Entity\Carrier;
 use App\Entity\Product;
 use App\Entity\Categories;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,5 +49,9 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         yield MenuItem::linkToCrud('Product', 'fas fa-store', Product::class);
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', Categories::class);
+        yield MenuItem::linkToCrud('Carriers', 'fas fa-truck', Carrier::class);
+        yield MenuItem::linkToCrud('Orders', 'fas fa-shopping-cart', Order::class);
+        yield MenuItem::linkToCrud('Cart', 'fas fa-boxes', Cart::class);
+
     }
 }

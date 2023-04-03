@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block body %}
-{% set pageName = "Account" %}
+	{% set pageName = "Account" %}
+	<div class="container-fluid">
+		{% include "partials/_pagetitle.html.twig" %}
+	</div>
 	<div class="container">
-	{% include "partials/_pagetitle.html.twig" %}
+
 		<div class="row">
 			<div class="col-md-12 justify-content-center align-items-center text-center">
 
@@ -25,6 +28,12 @@
 					<div class=" list-group-item col-md-12 fw-bold text-center bg-secondary">
 						<a href="{{path('app_account')}}" class='text-white text-decoration-none'>DASHBORD</a>
 					</div>
+					{% if is_granted('ROLE_ADMIN') %}
+						<div class=" list-group-item col-md-12 fw-bold text-center bg-info">
+							<a href="{{path('admin')}}" class='text-white text-decoration-none' target='_blank'>BACKOFFICE</a>
+						</div>
+					{% endif %}
+					
 					<li class="list-group-item">
 						<a href="" class="text-dark text-decoration-none">Mes informations</a>
 					</li>
@@ -35,7 +44,7 @@
 						<a href="" class="text-dark text-decoration-none">Mes adresses</a>
 					</li>
 					<li class="list-group-item">
-						<a href="" class="text-dark text-decoration-none">Mes commandes</a>
+						<a href="#commandes" class="text-dark text-decoration-none">Mes commandes</a>
 					</li>
 					<li class="list-group-item">
 						<a href="{{path('app_logout')}}" class="text-dark text-decoration-none">Logout</a>
@@ -43,25 +52,25 @@
 				</ul>
 			</div>
 
-			<div class="col-md-9">
-								{# Afficher les messages flash#}
-					{% for message in app.flashes('success') %}
-						<div class="card-header">
-							<div
-								class="alert alert-success alert-dismissible fade show" role="alert">
-								{{message}}								
-								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
+			<div
+				class="col-md-9">
+				{# Afficher les messages flash#}
+				{% for message in app.flashes('success') %}
+					<div class="card-header">
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							{{message}}
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
-					{% endfor %}
-					{% for message in app.flashes('danger') %}
-						<div class="card-header">
-							<div class="alert alert-danger alert-dismissible fade show" role="alert">
-								{{message}}
-								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-							</div>
+					</div>
+				{% endfor %}
+				{% for message in app.flashes('danger') %}
+					<div class="card-header">
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							{{message}}
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 						</div>
-					{% endfor %}
+					</div>
+				{% endfor %}
 				<div class="card">
 					<div class="card-header">
 						<h3>Mon compte</h3>
@@ -155,13 +164,16 @@
 								<h4>Adresse de livraison</h4>
 								<a href="{{path('app_address_new')}}" class='btn btn-outline-primary mb-4'>Ajouter Une Nouvelle Adresse</a>
 								<div class="col-md-9">
-									{% if(app.user.addresses is not empty) %}{# si l'utilisateur a des adresses #}
-									{% set index = 0 %} {# on initialise un compteur #}
+									{% if(app.user.addresses is not empty) %}
+										{# si l'utilisateur a des adresses #}
+										{% set index = 0 %}
+										{# on initialise un compteur #}
 										{% for address in app.user.addresses %}
 											{% set index = index + 1 %}
 											<div class="card border-success mb-3" style="max-width: 18rem;">
 												<div class="card-header bg-transparent border-success d-flex justify-content-around">
-													<h5 class="card-title d-inline text-center">{{address.fullName}}</h5> <p>Adresse #{{index}}</p>
+													<h5 class="card-title d-inline text-center">{{address.fullName}}</h5>
+													<p>Adresse #{{index}}</p>
 												</div>
 												<div class="card-body text-success">
 													<p class="card-text">{{address.address}}<br>
@@ -211,6 +223,56 @@
 						</div>
 					</div>
 				</div>
+
+
+				<div class="card mt-1" id="commandes">
+					<div class="card-header">
+						<h3>Mes commandes</h3>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<table class="table table-striped">
+								{% if orders %}
+									<thead>
+										<tr>
+											<th scope="col">Référence</th>
+											<th scope="col">Date</th>
+											<th scope="col">Total</th>
+											<th scope="col">Nb produit</th>
+											<th scope="col">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{#Vérifier si l'user a déjà passé des commandes#}
+										
+											{% for order in orders %}
+												<tr>
+													<td>{{order.reference}}</td>
+													<td>{{order.createdAt|date('d/m/Y')}}</td>
+													<td>{{order.subtotalTTC / 100}}
+														€</td>
+													<td>{{order.quantity}}
+													</td>
+													<td>
+														<a href="{{path('app_account_order',{'id':order.id})}}" class="btn btn-primary">Voir</a>
+													</td>
+												</tr>
+											{% endfor %}
+										{% else %}
+											<tr>
+												<td colspan="5">Désolé
+													{{app.user.fullName}} vous n'avez pas encore passé de commande</td>
+											</tr>
+										{% endif %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</div>

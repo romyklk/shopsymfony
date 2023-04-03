@@ -74,11 +74,6 @@
 								<td colspan="3" class="text-end border-0 fw-bold h6 text-muted">TVA incluse</td>
 								<td class="border-0 fw-bold h6 text-muted">{{cart.data.taxes}}	€</td>
 							</tr>
-							{#  Livraison #}
-							<tr>
-								<td colspan="3" class="text-end border-0 fw-bold h6">Livraison</td>
-								<td class="border-0 fw-bold h6">5€</td>
-							</tr>
 							<tr>
 								<td colspan="3" class="text-end border-0 fw-bold h6">Total TTC</td>
 								<td class="border-0 fw-bold h6">{{cart.data.subtotal}}
@@ -99,7 +94,7 @@
 		{% if cart.data.subtotal != 0 %}
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<a href="{{path('app_cart_empty')}}" class="btn btn-warning">Vider mon panier</a>
-				<a href="" class="btn btn-success">Passer commande</a>
+				<a href="{{path('app_checkout')}}" class="btn btn-success">Passer commande</a>
 			</div>
 
 		{% endif %}

@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement -
+	{{parent()}}
+{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<style>
+		.form-check {
+			border: 3px solid #c6e0ff;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			padding: 30px;
+			cursor: pointer;
+			width: 100%;
+			background-color: #f8f9fa;
+		}
+
+		tr,
+		td,
+		th {
+			border: 0;
+		}
+
+		tbody:nth-child(1) td {
+			font-weight: 600;
+			text-align: right;
+		}
+	</style>
+{% endblock %}
+
+
+{% block body %}
+
+	{% set pageName = "Paiement" %}
+	<div class="container-fluid">
+		{% include "partials/_pagetitle.html.twig" %}
+	</div>
+	<div class="container">
+
+		{{form_start(checkout,{action: path('app_checkout_confirm'), method: 'POST'})}}
+		<div class="row">
+
+			<div class="col-md-5">
+				<div class="form-group">
+					<h3>Adresse de livraison</h3>
+					<div class="content">
+						{{ form_widget(checkout.address)| replace({'[goline]': '<br>'})|replace({'<input': '<input checked'})|raw }}
+					</div>
+					{#Ajouter une nouvelle adresse#}
+					<div class="d-grid gap-2 col-6 mx-auto">
+						<a href="{{path('app_address_new')}}" class="btn btn-dark">Ajouter une nouvelle adresse</a>
+					</div>
+
+
+				</div>
+				<div class="form-group">
+					<h3 class="mt-2">Choisissez un transporteur</h3>
+					<div>
+						{{form_widget(checkout.carrier)| replace({"[goline]": "<br>"})|raw}}
+					</div>
+				</div>
+				<div class="form-group mt-3">
+					<h3 class="mt-2">Ajouter un message</h3>
+					<div>
+						{{form_widget(checkout.informations)}}
+						{{form_errors(checkout.informations)}}
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-7 bg-light shadow">
+				<table class="table table-striped">
+					<h3>
+						Résumé de votre commande
+					</h3>
+					<thead>
+						<tr>
+							<th>Produit</th>
+							<th>Quantité</th>
+							<th>Prix</th>
+							<th>Photo</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for element in cart.products %}
+							<tr>
+								<td>{{element.product.name}}</td>
+								<td>{{element.quantity}}</td>
+								<td>{{element.product.price / 100}}
+									€</td>
+								<td><img src="/assets/uploads/products/{{element.product.image}}" alt="{{element.product.name}}" width="50" height="50"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="well">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>Sous-total:</td>
+								<td>{{(cart.data.subtotal) - (cart.data.taxes)}}
+									€</td>
+							</tr>
+							<tr>
+
+								<td>Taxe
+									<small>(TVA incluse 20%)</small>
+								</td>
+								<td>
+									<span id="shipping-cost">{{cart.data.taxes}}
+										€</span>
+								</td>
+							</tr>
+							<tr>
+								<td>Total TTC:</td>
+								<td>
+									<span id="total-cost">{{cart.data.subtotal}}
+										€</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="d-grid gap-2 col-6 mx-auto">
+					<button class="btn btn-success">Valider</button>
+				</div>
+
+			</div>
+
+		</div>
+		{{form_end(checkout)}}
+
+	</div>
+{% endblock %}

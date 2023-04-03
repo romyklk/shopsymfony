@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement échoué -{{parent()}}
+{% endblock %}
+
+{% block body %}
+	{% set pageName = "Annulation" %}
+	<div class="container-fluid">
+		{% include "partials/_pagetitle.html.twig" %}
+	</div>
+
+	{# 	<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<h3>Le paiement a été annulé</h3>
+							<p>Bonjour
+								<strong>{{order.user.firstname}}
+									{{order.user.lastname}}</strong>,</p>
+							<div class="alert alert-danger">
+								<p>Vous pouvez réessayer de payer votre commande en cliquant sur le bouton ci-dessous</p>
+								<a href="{{path('app_checkout')}}" class="btn btn-primary">Payer</a>
+							</div>
+						</div>
+					</div> #}
+
+	<div class="container py-5">
+		<div class="row ">
+			<div class="col-md-10 mx-auto">
+				<div class="card shadow-sm bg-warning">
+					<div class="card-body">
+						<h1 class="h3 mb-3">Annulation de paiement</h1>
+						<p>Bonjour
+							<strong>{{order.user.firstname}}
+								{{order.user.lastname}}</strong>,</p>
+						<p>Nous sommes désolés d'apprendre que votre paiement pour la commande N°
+							<strong>{{orderNumber}}
+							</strong>
+							a été annulé le
+							{{ "now"|date("m/d/Y") }}.</p>
+						<p>Le numéro de la transaction est :
+							<strong>{{order.reference}}</strong>
+						</p>
+						<p>
+							Mode de paiement :
+							<strong>Carte bancaire</strong>
+						</p>
+						<p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
+						<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+							<a href="{{path('app_checkout')}}" class="btn btn-success">Payer
+						</a>
+							<a href="{{path('app_home')}}" class="btn btn-primary">Retour
+						</a>
+						</div>
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

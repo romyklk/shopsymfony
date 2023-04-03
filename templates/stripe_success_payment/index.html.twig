@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de paiement - {{parent()}}{% endblock %}
+
+{% block stylesheets %}
+ 
+    	<style>
+		.panel-success > .panel-heading {
+			background-color: #5cb85c;
+			color: #ffffff;
+		}
+		.panel-success > .panel-heading h3 {
+			font-size: 24px;
+			font-weight: bold;
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		.panel-success > .panel-body {
+			font-size: 18px;
+			line-height: 1.5;
+			padding: 30px;
+			background-color: #f7f7f7;
+		}
+		.icon-check {
+			color: #5cb85c;
+			font-size: 32px;
+			margin-right: 10px;
+			vertical-align: middle;
+		}
+
+	</style>
+{% endblock %}
+
+{% block body %}
+{% set pageName = "Confirmation de paiement" %}
+ <div class="container-fluid">
+	{% include "partials/_pagetitle.html.twig" %}
+</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h1 class="panel-title text-center"><i class="bi bi-check2-circle" style="font-size: 50px;"></i> Confirmation de paiement</h1>
+					</div>
+					<div class="panel-body">
+						<p>Bonjour <strong>{{order.user.firstname}} {{order.user.lastname}}</strong>,</p>
+						<p>Le paiement de votre commande N° {{orderNumber}}  a été effectué avec succès.</p>
+						<p>Le montant de la transaction est de : <strong>{{order.subtotalTTC / 100}} €</strong></p>
+						<p>La date de la transaction est : <strong>{{ "now"|date("m/d/Y") }}</strong></p>
+                        <p>Le numéro de la transaction est : <strong>{{order.reference}}</strong></p>
+                        <p>
+                            Mode de paiement : <strong>Carte bancaire</strong>
+                        </p>
+						<p>Merci pour votre achat!</p>
+
+                        <p><a href="{{ path('app_home') }}" class="btn btn-success">Retour à l'accueil</a></p>
+					</div>
+				</div>
+			</div>
+            <div class="col-md-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h1 class="panel-title text-center"><i class="bi bi-box-seam-fill" style="font-size: 50px;"></i> Détail de votre commande</h1>
+					</div>
+					<div class="panel-body">
+						
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th col="20">Produit</th>
+									<th>Quantité</th>
+									<th>Prix Unitaire</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for product in products %}
+								<tr>
+									<td>{{product.productName}}</td>
+									<td>{{product.quantity}}</td>
+									<td>{{product.productPrice}} €</td>
+									<td>{{product.productPrice * product.quantity}} €</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+							
+						
+                        </table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

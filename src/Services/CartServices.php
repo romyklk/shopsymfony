@@ -146,6 +146,7 @@ class CartServices
             'quantity_cart' => $quantity_cart,
             'subtotal' => $subtotal,
             'taxes' => round($subtotal * $this->tva, 2),
+            'total' => round($subtotal, 2)
         ];
 
         // On retourne le tableau contenant tous les produits du panier et les données du panier

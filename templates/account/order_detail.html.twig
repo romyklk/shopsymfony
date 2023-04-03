@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail commande|
+	{{parent()}}
+{% endblock %}
+
+{% block body %}
+	{% set pageName = "Détail commande" %}
+	<div class="container-fluid">
+		{% include "partials/_pagetitle.html.twig" %}
+	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Commande n°{{order.reference}}</h2>
+                <p>Commande passée le <strong>{{order.createdAt|date('d/m/Y')}}</strong></p>
+                <p>Montant total : <strong>{{order.subtotalTTC / 100}} €</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.orderDetails %}
+                            <tr>
+                                <td>{{item.productName}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.productPrice}} €</td>
+                                <td>{{item.productPrice * item.quantity}} €</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                </table>
+
+                {#Afficher les infos du livreur et les taxes#}
+               <div class="row">
+                <div class="col-md-3 m-auto">
+                     <p>Colis livré par <strong>{{order.carrierName}}</strong></p>
+                <p>Montant des frais de livraison : <strong>{{order.carrierPrice / 100}} €</strong></p>
+                <p>Montant des taxes : <strong>{{(order.taxe / 100)|round(2)}} €</strong></p>
+                <a href="{{path('app_account')}}" class="btn btn-success">Retour account</a>
+                </div>
+               </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+

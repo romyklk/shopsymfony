@@ -1,18 +1,29 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Account;
 
 use App\Entity\Address;
 use App\Form\AddressType;
+use App\Services\CartServices;
 use App\Repository\AddressRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/address')]
 class AddressController extends AbstractController
 {
+
+    private $session;
+
+    public function __construct(SessionInterface $session)
+    {
+        $this->session = $session;
+    }
+
+
     #[Route('/', name: 'app_address_index', methods: ['GET'])]
     public function index(AddressRepository $addressRepository): Response
     {
@@ -22,7 +33,7 @@ class AddressController extends AbstractController
     }
 
     #[Route('/new', name: 'app_address_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AddressRepository $addressRepository): Response
+    public function new(Request $request, AddressRepository $addressRepository, CartServices $cartServices): Response
     {
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
@@ -32,6 +43,11 @@ class AddressController extends AbstractController
             $user = $this->getUser(); // Pour récupérer l'utilisateur connecté
             $address->setUser($user); // Pour lier l'adresse à l'utilisateur connecté
             $addressRepository->save($address, true);
+
+
+            if($cartServices->getFullCart()) { // Si le panier n'est pas vide, on redirige vers la page de paiement
+                return $this->redirectToRoute('app_checkout', [], Response::HTTP_SEE_OTHER);
+            }
             $this->addFlash('success', 'Votre adresse a bien été ajoutée');
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,6 +74,15 @@ class AddressController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $addressRepository->save($address, true);
+
+            if($this->session->get('checkout_data')) { // Si le panier n'est pas vide, on redirige vers la page de paiement
+                $data = $this->session->get('checkout_data');
+                $data['address'] = $address;
+                $this->session->set('checkout_data', $data);
+                return $this->redirectToRoute('app_checkout_confirm', [], Response::HTTP_SEE_OTHER);
+            }
+
+
             $this->addFlash('success', 'Votre adresse a bien été modifiée');
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -78,3 +103,4 @@ class AddressController extends AbstractController
         return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
     }
 }
+
