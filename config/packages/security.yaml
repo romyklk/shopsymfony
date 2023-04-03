@@ -21,7 +21,11 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
-
+            remember_me:
+                secret: '%kernel.secret%' # Permet de générer un token unique pour chaque utilisateur
+                lifetime: 604800 # Pour une durée de vie de 7 jours
+                path: / # Pour que le cookie soit accessible sur toutes les routes
+                signature_properties: ['password', 'updatedAt'] # Pour que le cookie soit invalide si le mot de passe ou la date de dernière connexion change
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 

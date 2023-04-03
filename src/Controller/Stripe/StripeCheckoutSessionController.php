@@ -31,7 +31,7 @@ class StripeCheckoutSessionController extends AbstractController
 
         // Création de l'intent de paiement. L'intent de paiement est une requête vers l'API Stripe qui permet de créer un paiement non finalisé (en attente de confirmation de la part de l'utilisateur) et de récupérer un identifiant client_secret qui permettra de finaliser le paiement. 
         $paymentIntent = \Stripe\PaymentIntent::create([
-            'amount' => $cart->getSubtotalTTC() * 100,
+            'amount' => $cart->getSubtotalTTC(),
             'currency' => 'eur',
             'payment_method_types' => ['card'],
             'receipt_email' => $user->getEmail(),
