@@ -1,0 +1,49 @@
+<div class="col">
+							<div class="card h-100 border-0 shadow-lg m-2">
+								<img src="/assets/uploads/products/{{product.image}}" class="d-block w-100" alt="..." style="height: 300px;">
+								<div class="card-body">
+									<a href="{{path('app_product_detail',{'slug':product.slug})}}" class="text-dark text-decoration-none">
+										<p class="h5">{{product.name}}</p>
+									</a>
+									{% for categorie in product.category %}
+										{% if loop.index is even %}
+											<span class="badge text-bg-warning">{{ categorie }}</span>
+										{% else %}
+											<span class="badge text-bg-info">{{ categorie }}</span>
+										{% endif %}
+									{% endfor %}
+
+									<p>
+                                        {% set description = product.description|replace({'&nbsp;': ' '}) %}
+										{% if description|length > 100 %}
+											{{ description|slice(0, 100)|striptags }}...
+										{% else %}
+											{{ description|striptags }}
+										{% endif %}
+									</p>
+
+
+									{% if product.moreInfos is not null %}
+
+										<figcaption class="blockquote-footer">
+											More Infos :
+											<cite title="Source Title">{{product.moreInfos|raw}}</cite>
+										</figcaption>
+
+									{% endif %}
+									<p>
+										<strong>
+											{{product.price}}
+											€
+										</strong>
+									</p>
+									<div class="container d-flex justify-content-between">
+										<a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-success">Payer</a>
+										<a href="{{path('app_product_detail',{'slug':product.slug})}}" class="btn btn-info">Voir plus</a>
+										<a href="" class="btn btn-outline-success">
+											<i class="bi bi-heart"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>

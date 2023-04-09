@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Repository\HomeSliderRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(ProductRepository $repoProduct): Response
+    public function index(ProductRepository $repoProduct,HomeSliderRepository $homeSliderRepository): Response
     {
         $products = $repoProduct->findAll(); // Récupère tous les produits
         // dd($products);
@@ -29,6 +30,10 @@ class HomeController extends AbstractController
 
        // dd($productsBestSeller, $productsFeatured, $productsNewArrival, $productsOnSale, $productsIsSpecialOffer);
 
+        //$homeSliders = $homeSliderRepository->findBy(['isDisplayed' => true]);
+        $homeSliders = $homeSliderRepository->findByIsDisplayed(true);
+       // dd($homeSliders);
+
         
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
@@ -37,7 +42,9 @@ class HomeController extends AbstractController
             'productsFeatured' => $productsFeatured,
             'productsNewArrival' => $productsNewArrival,
             'productsOnSale' => $productsOnSale,
-            'productsIsSpecialOffer' => $productsIsSpecialOffer
+            'productsIsSpecialOffer' => $productsIsSpecialOffer,
+            'homeSliders' => $homeSliders,
+
 
         ]);
     }

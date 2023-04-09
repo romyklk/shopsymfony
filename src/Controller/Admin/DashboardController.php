@@ -5,8 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Cart;
 use App\Entity\Order;
 use App\Entity\Carrier;
+use App\Entity\Contact;
 use App\Entity\Product;
 use App\Entity\Categories;
+use App\Entity\HomeSlider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -47,11 +49,13 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
-        yield MenuItem::linkToCrud('Product', 'fas fa-store', Product::class);
+        yield MenuItem::linkToCrud('Produit', 'fas fa-store', Product::class);
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', Categories::class);
-        yield MenuItem::linkToCrud('Carriers', 'fas fa-truck', Carrier::class);
-        yield MenuItem::linkToCrud('Orders', 'fas fa-shopping-cart', Order::class);
-        yield MenuItem::linkToCrud('Cart', 'fas fa-boxes', Cart::class);
+        yield MenuItem::linkToCrud('Livreur', 'fas fa-truck', Carrier::class);
+        yield MenuItem::linkToCrud('Commandes', 'fas fa-shopping-cart', Order::class);
+        yield MenuItem::linkToCrud('Panier', 'fas fa-boxes', Cart::class);
+        yield MenuItem::linkToCrud('Home Slider', 'fas fa-images', HomeSlider::class);
+        yield MenuItem::linkToCrud('Contact', 'fas fa-envelope', Contact::class);
 
     }
 }

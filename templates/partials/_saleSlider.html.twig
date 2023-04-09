@@ -1,0 +1,58 @@
+{% block slideSheet %}
+	<style>
+		/* CSS */
+		.texte-ombre {
+			text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.9); /* Augmenter l'ombre */
+		}
+
+		.ombre {
+			text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); /* Augmenter l'ombre */
+		}
+
+		#btnLink {
+			background-color: #1a1a1a;
+			border: 1px solid #1a1a1a;
+			color: #fff;
+			font-size: 1rem;
+			font-weight: 700;
+			padding: 1rem;
+			text-transform: uppercase;
+			border-radius: 30px;
+			transform: rotate(0deg); /* Rotation d'origine */
+		}
+		#btnLink:hover {
+			background-color: #fff;
+			border: 1px solid #1a1a1a;
+			color: #1a1a1a;
+			font-size: 1rem;
+			font-weight: 700;
+			padding: 1rem;
+			text-transform: uppercase;
+			border-radius: 30px;
+			transform: scale(1.1);
+			transition: all 0.3s ease-in-out;
+			transform: rotate(3deg);
+
+		}
+	</style>
+{% endblock %}
+
+
+<div class="container-fluid mt-2">
+	<div class="swiper swiper-block" style="height: 550px;">
+		<div class="swiper-wrapper">
+
+			{% for slider in homeSliders %}
+				<div class="swiper-slide" style="background-image: url('assets/uploads/carousel/{{slider.image}}'); background-size: cover; background-position: center;">
+					<div class="carousel-caption d-flex flex-column justify-content-center align-items-start text-start" style="height: 100%; display: flex; margin-start: 3rem;">
+						<h2 class="display-2 ombre texte-ombre">{{slider.title}}</h2>
+						<h5 class="ombre texte-ombre">{{slider.description|raw}}</h5>
+						<a href="{{slider.Buttonlink}}" class="btn btn-success btn-lg" id="btnLink">{{slider.ButtonMessage}}
+							<i class="bi bi-arrow-right-circle-fill"></i>
+						</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>

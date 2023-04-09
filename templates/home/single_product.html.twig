@@ -12,7 +12,7 @@
 				<h2 class='text-center'>Détails
 					{{product.name}}</h2>
 				<div class="card mb-3 mt-3">
-				
+
 					<div class="row g-0">
 						<div class="col-md-4">
 							<img src="/assets/uploads/products/{{product.image}}" class="img-fluid rounded-start" alt="{{product.name}}">
@@ -58,14 +58,19 @@
 										Ajouter au panier
 									</a>
 
+									{# <a href="{{path('app_checkout')}}" class="btn btn-danger">
+										payer
+									</a> #}
+
 									{# <div class="quantity">
-										<input type="number" class="form-control" id="quantity" value="1" min="0" max="5" name="quantity">
-									</div> #}
+																			<input type="number" class="form-control" id="quantity" value="1" min="0" max="5" name="quantity">
+																		</div> #}
 								</div>
 								<p class="card-text">
 									<small class="text-muted">
-										{{random(1, 1000)}} vues en ce moment
-										
+										{{random(1, 1000)}}
+										vues en ce moment
+
 									</small>
 								</p>
 							</div>
@@ -87,9 +92,9 @@
 						{% for productFeatured in category.products %}
 							{% if product is not same as(productFeatured) %}
 								{# on boucle sur les produits de la catégorie #}
-							{% include "partials/_product_items.html.twig" %}
+								{% include "partials/_product_items.html.twig" %}
 							{% endif %}
-							
+
 						{% endfor %}
 					{% endfor %}
 

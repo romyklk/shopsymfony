@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - {{ parent() }}{% endblock %}
+
+
+{% block body %}
+	{% set pageName = "Contact" %}
+	<div class="container-fluid m-0">
+		{% include "partials/_pagetitle.html.twig" %}
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 m-auto py-5 col-md-offset-1">
+				<h1 class="text-center display-3">Nous joindre</h1>
+			</div>
+		</div>
+		{# Afficher les messages flashes #}
+		<div class="row">
+			<div
+				class="col-md-3  m-auto col-8">
+				{# vérififier s'il y a un message #}
+				{% for message in app.flashes('success') %}
+					
+					<div class="alert alert-success text-center">
+						{{ message }}
+					</div>
+
+				{% endfor %}
+
+				{% for message in app.flashes('danger') %}
+					<div class="alert alert-danger text-center">
+						{{ message }}
+					</div>
+				{% endfor %}
+			 
+
+			</div>
+		</div>
+		{% include "contact/_form.html.twig" %}
+
+	</div>
+	<div class="container-fluid mt-5 bg-light py-2">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="text-center">
+					<h4>
+						<i class="bi bi-headset" style="font-size: 50px;"></i>
+					</h4>
+					<p>+33 1 22 33 44 55
+					</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="text-center">
+					<h4>
+						<i class="bi bi-envelope" style="font-size: 50px;"></i>
+					</h4>
+					<p>shop@symshop.me</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="text-center">
+					<h4>
+						<i class="bi bi-geo-alt" style="font-size: 50px;"></i>
+					</h4>
+					<p>1234 Rue de la boutique<br>
+						Paris, France</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="text-center">
+					<h4>
+						<i class="bi bi-people" style="font-size: 50px;"></i>
+					</h4>
+					<p>Service client 7j/7 24h/24</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

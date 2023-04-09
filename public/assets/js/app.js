@@ -6,3 +6,6 @@ var swiper = new Swiper(".swiper-block", {
     autoplay: { delay: 5000 , disableOnInteraction: false},
   });
 //  Fin Swiper JS
+
+
+
