@@ -2,11 +2,12 @@
 
 namespace App\Controller\Shop;
 
-use App\Repository\CategoriesRepository;
+use App\Form\SearchProductType;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategoriesRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ShopController extends AbstractController
 {
@@ -15,9 +16,16 @@ class ShopController extends AbstractController
     {
         $categories = $categoriesRepository->findAll();
         $products = $productRepository->findAll();
+
+        // Créer le formlaire de recherche
+
+        $form = $this->createForm(SearchProductType::class,null);
+
+        
         return $this->render('shop/index.html.twig', [
             'categories' => $categories,
             'products' => $products,
+            'search' => $form->createView()
         ]);
     }
 }
