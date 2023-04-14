@@ -107,7 +107,7 @@ class EmailSender
             'Messages' => [
                 [
                     'From' => [
-                        'Email' => "romyklk2210+mailjet@gmail.com",
+                        'Email' => "shop@symshop.romy-dev.me",
                         'Name' => "Sym Shop"
                     ],
                     'To' => [
@@ -147,7 +147,7 @@ class EmailSender
             'Messages' => [
                 [
                     'From' => [
-                        'Email' => "romyklk2210+mailjet@gmail.com",
+                        'Email' => "shop@symshop.romy-dev.me",
                         'Name' => "Sym Shop"
                     ],
                     'To' => [
