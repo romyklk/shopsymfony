@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Entity\EmailModel;
+use App\Services\EmailSender;
 use App\Repository\ContactRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/contact')]
 class ContactController extends AbstractController
@@ -22,7 +25,7 @@ class ContactController extends AbstractController
     } */
 
     #[Route('/', name: 'app_contact_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ContactRepository $contactRepository): Response
+    public function new(Request $request, ContactRepository $contactRepository,EmailSender $emailSender): Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
@@ -34,6 +37,10 @@ class ContactController extends AbstractController
             $this->addFlash('success', 'Votre message a bien été envoyé !');
 
             // Envoi du mail
+            
+
+
+    
 
             //return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
             $contact = new Contact();

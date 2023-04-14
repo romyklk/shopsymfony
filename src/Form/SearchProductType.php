@@ -18,10 +18,11 @@ class SearchProductType extends AbstractType
             ->add('categories',EntityType::class,[
                 'class' => Categories::class,
                 'label' => false,
-                'choice_label' => 'name',
                 'multiple' => true,
-                'expanded' => true,
                 'required' => false,
+                'attr' => [
+                    'class' => 'categories-input',
+                ]
             ])
             ->add('priceMin',IntegerType::class,[
                 'label' => false,
@@ -43,7 +44,8 @@ class SearchProductType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Tags'
+                    'placeholder' => 'Par tags',
+                    'class' => 'tags-input'
                 ]
             ])
         ;

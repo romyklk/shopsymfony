@@ -5,7 +5,6 @@
 {% endblock %}
 
 
-
 {% block body %}
 	{% set pageName = "Boutique" %}
 	<div class="container-fluid m-0">
@@ -14,54 +13,139 @@
 
 	<div class="container">
 
-		<div class="row">
-				<div class="col-lg-4 d-none d-lg-block">
+		<div
+			class="row">
+			{#<div class="col-lg-4 col-12 d-lg-block">
+																																											
+																																											<div class="row text-center d-lg-block mb-3">
+																																												<h3>Filtrer</h3>
+																																											</div>
+																																											<div class="card">
+																																												<div class="card-header h6 text-center bg-secondary text-white">
+																																													Par catégorie
+																																												</div>
+																																											</div>
+																																											<div class="row">
+																																												<div class="col">
+																																													<input type="text" class="mt-2 form-control" placeholder="Entrez une catégorie">
+																																												</div>
+																																											</div>
+																																											<div class="card  mt-2 border-0">
+																																												<div class="card-header h6 text-center bg-secondary text-white">
+																																													Par prix
+																																												</div>
+																																											</div>
+																																											<div class="row">
+																																												<div class="col">
+																																													<input type="text" class="mt-2 form-control" placeholder="Entrez le prix min">
+																																												</div>
+																																												<div class="col">
+																																													<input type="text" class="mt-2 form-control" placeholder="Entrez le prix max">
+																																												</div>
+																																											</div>
+																																											<div class="card mt-2 border-0">
+																																												<div class="card-header h6 text-center bg-secondary text-white">
+																																													Par tag
+																																												</div>
+																																											</div>
+																																											<div class="row">
+																																												<div class="col">
+																																													<input type="text" class="mt-2 form-control" placeholder="Entrez un tag">
+																																												</div>
+																																											</div>
+																																											<div class="row mt-2 mb-2">
+																																												<div class="d-grid gap-2 col-6 mx-auto">
+																																													<button class="btn btn-primary" type="button">Filtrer</button>
+																																												</div>
+																																											</div>
+																																							
+																																										</div>#}
 
-				{{form_start(search)}}
-				<div class="card" style="width: 18rem;">
-					<div class="card-header h4 text-center bg-primary text-white">
-						Catégorie
-					</div>
-					{# <ul class="list-group list-group-flush">
-																										{% for categorie in categories %}
-																											<li class="list-group-item">{{categorie.name}}</li>
-																										{% endfor %}
-																									</ul> #}
-					{{form_row(search.categories)}}
-				</div>
-				<div class="card-body mt-2">
-					<div class="form-row d-flex justify-content-start">
-						<div class="form-group col-md-4 col-12 search_product_categories">
-							{{form_row(search.priceMin)}}
+			<div class="col-lg-4 col-md-12 mb-4 mb-lg-0 ps-4 mt-lg-5">
+				<nav class="navbar navbar-expand-lg navbar-light bg-white rounded shadow">
+					<div class="container-fluid flex-lg-column align-items-stretch">
+						<h4 class="mt-2 text-uppercase">Trier par</h4>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filterDropdown" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						{{form_start(search)}}
+						<div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="filterDropdown">
+							<div class="border bg-light p-2 rounded mb-3">
+								<h5 class="mb-3 text-capitalize" style="font-size: 20px;">Catégorie</h5>
+
+								{# <input type="text" class="mt-2 form-control" placeholder="Entrez une catégorie"> #}
+								{{form_widget(search.categories)}}
+
+							</div>
+
+							<div class="border bg-light p-2 rounded mb-3">
+								<h5 class="mb-3 text-capitalize" style="font-size: 20px;">Prix</h5>
+
+								<div class="d-flex justify-content-between">
+									<div
+										class="me-2">
+										{# <input type="number" class="form-control shadow-none" id="g1" placeholder="min"> #}
+										{{form_widget(search.priceMin)}}
+									</div>
+
+									<div
+										class="me-2">
+										{# <input type="number" class="form-control shadow-none" id="g2" placeholder="max"> #}
+										{{form_widget(search.priceMax)}}
+									</div>
+
+									<div class="me-2">
+										<input type="submit" class="btn btn-success shadow-none" id="g2" value="Valider">
+									</div>
+								</div>
+							</div>
+
+							<div class="border bg-light p-2 rounded mb-3">
+								<h5 class="mb-3 text-capitalize" style="font-size: 20px;">Tags</h5>
+
+								{# <input type="text" class="mt-2 form-control" placeholder="Entrez un tag"> #}
+								{{form_widget(search.tags)}}
+							</div>
+
+
+							<div class="border bg-light p-2 rounded mb-3">
+								<h5 class="mb-3 text-capitalize" style="font-size: 20px;">Prix total</h5>
+								<div class="mb-2">
+									<input type="checkbox" class="form-check-input shadow-none me-1" id="p1" value="option1">
+									<label for="p1" class="form-check-label">100 € à 150 €</label>
+								</div>
+
+								<div class="mb-2">
+									<input type="checkbox" class="form-check-input shadow-none me-1" id="p2" value="option1">
+									<label for="p2" class="form-check-label">150 € à 225 €</label>
+								</div>
+
+								<div class="mb-2">
+									<input type="checkbox" class="form-check-input shadow-none me-1" id="p3" value="option1">
+									<label for="p3" class="form-check-label">Plus de 225 €</label>
+								</div>
+							</div>
+
+							<div class="p-2 rounded mb-3 justify-content-center m-auto">
+								<input type="submit" class="btn btn-primary btn-lg shadow-none" id="g2" value="Rechercher">
+
+							</div>
+
 						</div>
-						<div class="form-group col-md-4 col-12 .search_product_categories_right">
-							{{form_row(search.priceMax)}}
-						</div>
+						{{form_end(search)}}
 					</div>
-
-				</div>
-
-				<div class="card-body mt-2">
-					<div class="form-row">
-						<div class="form-group col-md-8">
-							{{form_row(search.tags)}}
-						</div>
-					</div>
-
-				</div>
-				<button type="submit" class="btn btn-primary">Rechercher</button>
-				{{form_end(search)}}
-
+				</nav>
 			</div>
 
-			<div class="col-lg-8 col-12">
 
+			<div class="col-lg-8 col-12">
+				{% if products %}
 				<div class="row text-center d-none d-lg-block mb-3">
 					<h3>Découvrez nos produits les plus populaires</h3>
 				</div>
 				<div class="row row-cols-1 row-cols-md-2 g-3">
 
-
+					
 					{% for product in products %}
 
 						{% include "partials/_product_shop.html.twig" %}
@@ -69,13 +153,33 @@
 					{% endfor %}
 
 				</div>
-			</div>
 
-			<!--Pagination-->
+				{% else %}
+				<div class="row text-center">
+					<h3>Aucun produit ne correspond à votre recherche</h3>
+				</div>
+				{% endif %}
+			</div>
 
 
 		</div>
+
+
 	</div>
 
+
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.4.slim.min.js" integrity="sha256-a2yjHM4jnF9f54xUQakjZGaqYs/V1CYvWpoqZzC2/Bw=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script>
+		$(document).ready(function () {
+				$('.categories-input').select2();
+
+			});
+
+	</script>
 
 {% endblock %}

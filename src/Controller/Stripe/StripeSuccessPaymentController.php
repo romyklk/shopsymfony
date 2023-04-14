@@ -2,7 +2,10 @@
 
 namespace App\Controller\Stripe;
 
+use App\Entity\User;
 use App\Entity\Order;
+use App\Entity\EmailModel;
+use App\Services\EmailSender;
 use App\Services\CartServices;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StripeSuccessPaymentController extends AbstractController
 {
     #[Route('/stripe-success-payment/{stripeCheckoutSessionId}', name: 'app_stripe_success_payment')]
-    public function index(Request $request, EntityManagerInterface $entityManagerInterface, OrderRepository $orderRepository, CartServices $cartServices): Response
+    public function index(Request $request, EntityManagerInterface $entityManagerInterface, OrderRepository $orderRepository, CartServices $cartServices,EmailSender $emailSender): Response
     {
         $stripeCheckoutSessionId = $request->get('stripeCheckoutSessionId');
 
@@ -47,6 +50,25 @@ class StripeSuccessPaymentController extends AbstractController
 
             // Envoi d'un email de confirmation de paiement
             $this->addFlash('success', 'Votre paiement a bien été effectué. Vous allez recevoir un email de confirmation.');
+
+            // Envoi d'un email de confirmation de paiement
+            $user = $this->getUser();
+
+            $email = new EmailModel();
+ 
+
+            $emailSender->sendEmailWithMailjet($user, $email,$order);
+
+           // Créer un user qui sera l'admin qui va recevoir la notification
+                $userAdmin = new User();
+                $userAdmin->setEmail('romyklk2210+mailjet@gmail.com');
+                $userAdmin->setFirstName('SYMSHOP');
+                $userAdmin->setLastName('Shop');
+            
+                $email = new EmailModel();
+                
+                $emailSender->sendEmailToAdmin($userAdmin, $email,$order);
+            
 
             // Récupérer la liste des produits de la commande
             $products = $order->getOrderDetails()->getValues();
