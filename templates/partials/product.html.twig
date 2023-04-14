@@ -19,9 +19,16 @@
 				€</span>
 		</p>
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			{% if product.quantity > 0 %}
             <a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-primary"><i class="bi bi-bag-plus"></i></a>
+			{% else %}
+			<p>
+				<span class="badge bg-danger">En rupture de stock</span>
+			</p>
+			{% endif %}
             <a href="{{path('app_product_detail',{'slug':product.slug})}}" class="btn btn-outline-info"><i class="bi bi-eye"></i></i></a>
             <a href="" class="btn btn-outline-secondary"><i class="bi bi-heart"></i></a>
+
 		</div>
 	</div>
 </div>

@@ -48,6 +48,7 @@
 										€</p>
 								</div>
 
+								{% if product.quantity > 0 %}
 								<div class="d-flex flex-row gap-3">
 
 									<a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-success">
@@ -66,6 +67,9 @@
 																			<input type="number" class="form-control" id="quantity" value="1" min="0" max="5" name="quantity">
 																		</div> #}
 								</div>
+								{% endif %}
+
+
 								<p class="card-text">
 									<small class="text-muted">
 										{{random(1, 1000)}}

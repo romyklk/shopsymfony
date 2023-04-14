@@ -33,7 +33,7 @@
 							<a href="{{path('admin')}}" class='text-white text-decoration-none' target='_blank'>BACKOFFICE</a>
 						</div>
 					{% endif %}
-					
+
 					<li class="list-group-item">
 						<a href="" class="text-dark text-decoration-none">Mes informations</a>
 					</li>
@@ -233,19 +233,19 @@
 						<div class="row">
 							<div class="col-md-12">
 								<table class="table table-striped">
-								{% if orders %}
-									<thead>
-										<tr>
-											<th scope="col">Référence</th>
-											<th scope="col">Date</th>
-											<th scope="col">Total</th>
-											<th scope="col">Nb produit</th>
-											<th scope="col">Actions</th>
-										</tr>
-									</thead>
-									<tbody>
-										{#Vérifier si l'user a déjà passé des commandes#}
-										
+									{% if orders %}
+										<thead>
+											<tr>
+												<th scope="col">Référence</th>
+												<th scope="col">Date</th>
+												<th scope="col">Total</th>
+												<th scope="col">Nb produit</th>
+												<th scope="col">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											{#Vérifier si l'user a déjà passé des commandes#}
+
 											{% for order in orders %}
 												<tr>
 													<td>{{order.reference}}</td>
@@ -262,7 +262,8 @@
 										{% else %}
 											<tr>
 												<td colspan="5">Désolé
-													{{app.user.fullName}} vous n'avez pas encore passé de commande</td>
+													{{app.user.fullName}}
+													vous n'avez pas encore passé de commande</td>
 											</tr>
 										{% endif %}
 									</tbody>

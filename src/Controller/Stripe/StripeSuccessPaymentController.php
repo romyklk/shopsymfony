@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\EmailModel;
 use App\Services\EmailSender;
 use App\Services\CartServices;
+use App\Services\StockManagerServices;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StripeSuccessPaymentController extends AbstractController
 {
     #[Route('/stripe-success-payment/{stripeCheckoutSessionId}', name: 'app_stripe_success_payment')]
-    public function index(Request $request, EntityManagerInterface $entityManagerInterface, OrderRepository $orderRepository, CartServices $cartServices,EmailSender $emailSender): Response
+    public function index(Request $request, EntityManagerInterface $entityManagerInterface, OrderRepository $orderRepository, CartServices $cartServices,EmailSender $emailSender,StockManagerServices $stockManagerServices): Response
     {
         $stripeCheckoutSessionId = $request->get('stripeCheckoutSessionId');
 
@@ -40,6 +41,9 @@ class StripeSuccessPaymentController extends AbstractController
        if(!$order->getIsPaid()){
             // On met à jour le statut de la commande
             $order->setIsPaid(true);
+
+            // On met à jour le stock
+            $stockManagerServices->updateStock($order);
             
             $entityManagerInterface->flush();
 

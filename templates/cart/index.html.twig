@@ -51,8 +51,12 @@
 										<a href="{{path('app_cart_delete',{'id':element.product.id})}}" class="btn btn-outline-secondary" type="button" id="button-addon1">-</a>
 
 										<input type="number" class="form-control text-center" value="{{element.quantity}}" min="0" max="100" style='width:5px'>
+									{% if element.quantity < element.product.quantity %}
+									<a href="{{path('app_cart_add',{'id':element.product.id})}}" class="btn btn-outline-secondary" type="button" id="button-addon2">+</a>
+									{% else %}
+									<a href="{{path('app_cart_add',{'id':element.product.id})}}" class="btn btn-outline-secondary disabled" type="button" id="button-addon2">+</a>
+									{% endif %}
 
-										<a href="{{path('app_cart_add',{'id':element.product.id})}}" class="btn btn-outline-secondary" type="button" id="button-addon2">+</a>
 									</td>
 								</td>
 								<td>{{element.product.price /100 * element.quantity}}

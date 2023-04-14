@@ -125,6 +125,18 @@ class CartServices
 
             // Si le produit existe, on l'ajoute au tableau $fullCart
             if ($product) {
+
+                // Vérification de la quantité du produit est en stock
+
+                //Si la quantité du produit est supérieure à la quantité en stock, on met la quantité en stock dans le panier
+                if ($quantity > $product->getQuantity()) {
+                    $quantity = $product->getQuantity();
+                    $cart[$id] = $quantity; // On met à jour la quantité du produit dans le panier
+                    $this->updateCart($cart); // On met à jour le panier en session
+                }
+
+
+
                 // On ajoute le produit au tableau $fullCart
                 $fullCart['products'][] = [
                     'product' => $product,
@@ -152,4 +164,6 @@ class CartServices
         // On retourne le tableau contenant tous les produits du panier et les données du panier
         return $fullCart; 
     }
+
+
 }

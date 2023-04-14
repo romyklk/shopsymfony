@@ -37,6 +37,7 @@
 											€
 										</strong>
 									</p>
+									{% if product.quantity > 0 %}
 									<div class="container d-flex justify-content-between">
 										<a href="{{path('app_cart_add',{'id':product.id})}}" class="btn btn-outline-success">Payer</a>
 										<a href="{{path('app_product_detail',{'slug':product.slug})}}" class="btn btn-info">Voir plus</a>
@@ -44,6 +45,22 @@
 											<i class="bi bi-heart"></i>
 										</a>
 									</div>
+
+									{% else %}
+									<div class="container d-flex justify-content-between">
+										<p>
+											<strong class="text-danger">
+												En rupture de stock
+											</strong>
+										</p>
+										<a href="{{path('app_product_detail',{'slug':product.slug})}}" class="btn btn-info">Voir plus</a>
+										<a href="" class="btn btn-outline-success">
+											<i class="bi bi-heart"></i>
+										</a>
+									</div>
+									
+									{% endif %}
+									
 								</div>
 							</div>
 						</div>
